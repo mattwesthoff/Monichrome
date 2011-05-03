@@ -1,0 +1,12 @@
+{
+	"name" : "Monichrome",
+	"version" : "1.0",
+	"description" : "",
+	"browser_action" : {
+		"default_icon" : "icon.png",
+		"popup" : "monichrome.html"
+	},
+	"permissions" : [
+		"http://www.monitis.com/"
+	]
+}

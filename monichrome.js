@@ -1,9 +1,15 @@
+var chrome_getJSON = function(url, callback) {
+	console.log("sending getJSON request");
+	chrome.extension.sendRequest({action:'getJSON', url:url}, callback);
+};
+
 var Monichrome = function() {
 	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
 	return {
 		GetMonitors : function () {		
-			var jqxhr = $.getJSON("dataservice.js", 
+			chrome_getJSON("dataservices.js", 
 				function(data) {
+					console.log("in the callback");
 					var items = [];
 					$.each(data, function(key, location) {
 						$.each(location, function(key, monitors) {
@@ -23,11 +29,10 @@ var Monichrome = function() {
 					$('#monitors').tableFilter(options);
 				}
 			);
-			jqxhr.error(function() { alert('error!'); });
 		}
 	};
 }();
 
-$(document).ready(function () {
+$(function () {
 	Monichrome.GetMonitors();
 });
