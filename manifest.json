@@ -3,7 +3,7 @@
 	"version" : "1.0",
 	"description" : "",
 	"browser_action" : {
-		"default_icon" : "icon.png",
+		"default_icon" : "green_light.png",
 		"popup" : "monichrome.html"
 	},
 	"background_page" : "background.html",
