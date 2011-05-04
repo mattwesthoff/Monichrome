@@ -6,6 +6,7 @@
 		"default_icon" : "icon.png",
 		"popup" : "monichrome.html"
 	},
+	"background_page" : "background.html",
 	"permissions" : [
 		"http://www.monitis.com/"
 	]

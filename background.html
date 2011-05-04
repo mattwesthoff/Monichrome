@@ -3,14 +3,31 @@
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
 <script>
-function onRequest(request, sender, callback) {
-	console.log("got a request");
-  if (request.action == 'getJSON') {
-	console.log("calling getJSON");
-    $.getJSON(request.url, callback);
-  }
-}
-$(function() { chrome.extension.onRequest.addListener(onRequest); });
+var MonitisPoller = function () {
+	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
+	var MonitorData = null;
+	return {
+		Poll : function() {
+			console.log("polling monitis");
+			MonitisPoller.GetMonitors();
+			setTimeout("MonitisPoller.Poll()", 60000)
+		},
+		GetMonitorData : function() {
+			return MonitorData;
+		},
+		GetMonitors : function () {
+			$.getJSON(MonitisUrl, 
+				function(data) {
+					MonitorData = data;
+				}
+			);
+		}
+	};
+}();
+
+$(function() {
+	MonitisPoller.Poll();
+});
 </script>
 </head>
 <body>

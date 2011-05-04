@@ -2,41 +2,15 @@
 <html>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<!--<script type="text/javascript" src="jquery.uitablefilter.js"></script>-->
 <script type="text/javascript" src="picnet.table.filter.min.js"></script>
-<script>
-	$(function() {
-		console.log("starting");
-		var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
-		$.getJSON(MonitisUrl, 
-		function(data) {
-					console.log("in the callback");
-					var items = [];
-					$.each(data, function(key, location) {
-						$.each(location, function(key, monitors) {
-							$.each(monitors, function (key, monitor) {
-								if (monitor.id) {
-									items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
-								}
-							});
-						});
-					});
-					var html = items.join('');
-					$('#monitor_data').html(html);
-					
-					var options = {
-						additionalFilterTriggers: [$('#quickfind')]
-					};
-					$('#monitors').tableFilter(options);
-				}
-		);
-	});
-</script>
+<script type="text/javascript" src="monichrome.js"></script>
 </head>
 <body>
 Quick Filter: <input type="text" id="quickfind"/>
 <table id='monitors'>
 	<thead>
-		<tr><th>Status</th><th>Tag</th><th>Name</th></tr>        
+		<tr><th filter="false">Status</th><th filter="false">Tag</th><th filter="false">Name</th></tr>        
 	</thead>
 	<tbody id="monitor_data">
 	</tbody>
