@@ -1,0 +1,38 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="settings.js"></script>
+<script>
+$(function() {
+	$('#polling_time').val(Settings.GetPollingTimeout());
+	$('#filter_function').val(Settings.GetFilterFunction());
+	$('#save_settings').click(function() {
+		var pollingTime = $('#polling_time').val();
+		var filterFunc = $('#filter_function').val();
+		var oldFunc = Settings.GetFilterFunction();
+		Settings.SetPollingTimeout(pollingTime);
+		Settings.SetFilterFunction(filterFunc);
+		if (filterFunc !== oldFunc)
+		{
+			//cause a re-poll
+			chrome.extension.getBackgroundPage().MonitisPoller.Poll();
+		}
+		window.close();
+	});
+});
+</script>
+</head>
+<body>
+Options:
+<br /><br />
+Polling Interval (ms): <input id="polling_time" type="text" value="" />
+<br /><br />
+Filter Function:
+<br />
+<textarea id="filter_function" rows=10 cols=60>
+</textarea>
+<br />
+<input type="button" id="save_settings" value="Save" />
+</body>
+</html>

@@ -6,6 +6,7 @@
 		"default_icon" : "green_light.png",
 		"popup" : "monichrome.html"
 	},
+	"options_page" : "options.html",
 	"background_page" : "background.html",
 	"permissions" : [
 		"http://www.monitis.com/"
