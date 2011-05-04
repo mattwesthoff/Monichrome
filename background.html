@@ -2,6 +2,7 @@
 <html>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="settings.js"></script>
 <script>
 var MonitisPoller = function () {
 	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
@@ -10,7 +11,7 @@ var MonitisPoller = function () {
 		Poll : function() {
 			console.log("polling monitis");
 			MonitisPoller.GetMonitors();
-			setTimeout("MonitisPoller.Poll()", 60000)
+			setTimeout("MonitisPoller.Poll()", Settings.GetPollingTimeout())
 		},
 		GetMonitorData : function() {
 			return MonitorData;

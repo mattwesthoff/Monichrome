@@ -1,7 +1,9 @@
 var Monichrome = function() {
 	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
+	var includeMonitor = function() { return true; };
 	return {
 		Init : function () {
+      eval("includeMonitor = " + Settings.GetFilterFunction() + ";");
 			Monichrome.UpdateMonitors();
 		},
 		UpdateMonitors : function () {	
@@ -11,7 +13,9 @@ var Monichrome = function() {
 				$.each(location, function(key, monitors) {
 					$.each(monitors, function (key, monitor) {
 						if (monitor.id) {
-							items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
+              if (includeMonitor(location, monitor)) {
+                items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
+              }
 						}
 					});
 				});
