@@ -2,8 +2,24 @@
 <html>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="settings.js"></script>
 <script>
+var Settings = function () {
+  var DefaultTimeout = 60000;
+  return {
+    GetPollingTimeout : function() {
+      return localStorage["Monichrome.PollingTimeout"] || DefaultTimeout;
+    },
+    SetPollingTimeout : function(timeout) {
+      localStorage["Monichrome.PollingTimeout"] = timeout;
+    },
+    GetFilterFunction : function() {
+      return "function(loc, mon) { return true; }";
+      return localStorage["Monichrome.FilterFunction"] || 
+        "function(loc, monitor) { return monitor.tag === 'IDM';}";
+    }
+  };
+}();
+
 var MonitisPoller = function () {
 	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
 	var MonitorData = null;

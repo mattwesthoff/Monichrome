@@ -1,9 +1,6 @@
 var Monichrome = function() {
-	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
-	var includeMonitor = function() { return true; };
 	return {
 		Init : function () {
-      eval("includeMonitor = " + Settings.GetFilterFunction() + ";");
 			Monichrome.UpdateMonitors();
 		},
 		UpdateMonitors : function () {	
@@ -11,11 +8,8 @@ var Monichrome = function() {
 			var items = [];
 			$.each(data, function(key, monitorData) {
         var monitor = monitorData.monitor;
-        if (monitor.id) {
-          if (includeMonitor(location, monitor)) {
-            items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
-          }
-        }
+        console.log(monitor.tag);
+        items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
       });
 			var html = items.join('');
 			$('#monitor_data').html(html);
