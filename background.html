@@ -5,7 +5,8 @@
 <script type="text/javascript" src="settings.js"></script>
 <script>
 var MonitisPoller = function () {
-	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
+	var MonitisUrlStart = "http://www.monitis.com/api?apikey=";
+	var MonitisUrlEnd = "&output=json&version=2&action=testsLastValues&locationIds=1,10";
 	var MonitorData = null;
 	var includeMonitor = function() { return true; };
 	return {
@@ -26,7 +27,12 @@ var MonitisPoller = function () {
 			}
 		},
 		GetMonitors : function () {
-			$.getJSON(MonitisUrl, 
+			var apiKey = Settings.GetApiKey();
+			if (!apiKey) {
+				return;
+			}
+			var url = MonitisUrlStart + Settings.GetApiKey() + MonitisUrlEnd;
+			$.getJSON(url, 
 				function(data) {
 					var items = [];
 					var allOK = true;

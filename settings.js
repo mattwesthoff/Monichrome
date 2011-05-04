@@ -13,6 +13,12 @@ var Settings = function () {
     },
 	SetFilterFunction : function(filterFunc) {
 		localStorage["Monichrome.FilterFunction"] = filterFunc;
+	},
+	GetApiKey : function() {
+		return localStorage["Monichrome.MonitisApiKey"] || "";
+	},
+	SetApiKey : function(apiKey) {
+		localStorage["Monichrome.MonitisApiKey"] = apiKey;
 	}
   };
 }();

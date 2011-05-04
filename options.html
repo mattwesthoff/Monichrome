@@ -7,13 +7,17 @@
 $(function() {
 	$('#polling_time').val(Settings.GetPollingTimeout());
 	$('#filter_function').val(Settings.GetFilterFunction());
+	$('#api_key').val(Settings.GetApiKey());
 	$('#save_settings').click(function() {
 		var pollingTime = $('#polling_time').val();
 		var filterFunc = $('#filter_function').val();
+		var apiKey = $('#api_key').val();
+		var oldApiKey = Settings.GetApiKey();
 		var oldFunc = Settings.GetFilterFunction();
 		Settings.SetPollingTimeout(pollingTime);
 		Settings.SetFilterFunction(filterFunc);
-		if (filterFunc !== oldFunc)
+		Settings.SetApiKey(apiKey);
+		if ((filterFunc !== oldFunc) || (apiKey !== oldApiKey))
 		{
 			//cause a re-poll
 			chrome.extension.getBackgroundPage().MonitisPoller.Poll();
@@ -25,6 +29,8 @@ $(function() {
 </head>
 <body>
 Options:
+<br /><br />
+Monitis Api Key: <input id="api_key" type="text" value="" />
 <br /><br />
 Polling Interval (ms): <input id="polling_time" type="text" value="" />
 <br /><br />
