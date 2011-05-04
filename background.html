@@ -7,8 +7,10 @@
 var MonitisPoller = function () {
 	var MonitisUrl = "http://www.monitis.com/api?apikey=23G3JB3995UOS78B3329UTB152&output=json&version=2&action=testsLastValues&locationIds=1,10";
 	var MonitorData = null;
+	var includeMonitor = function() { return true; };
 	return {
 		Poll : function() {
+      eval("includeMonitor = " + Settings.GetFilterFunction() + ";");
 			console.log("polling monitis");
 			MonitisPoller.GetMonitors();
 			setTimeout("MonitisPoller.Poll()", Settings.GetPollingTimeout())
@@ -16,10 +18,35 @@ var MonitisPoller = function () {
 		GetMonitorData : function() {
 			return MonitorData;
 		},
+		SetIcon : function(allOK) {
+      if (allOK) {
+        chrome.browserAction.setIcon({path:"green_light.png"});
+      }
+      else {
+        chrome.browserAction.setIcon({path:"red_light.png"});       
+      }
+		},
 		GetMonitors : function () {
 			$.getJSON(MonitisUrl, 
 				function(data) {
-					MonitorData = data;
+            var items = [];
+            var allOK = true;
+            $.each(data, function(key, location) {
+            $.each(location, function(key, monitors) {
+              $.each(monitors, function (key, monitor) {
+                if (monitor.id) {
+                  if (includeMonitor(location, monitor)) {
+                    if (monitor.status === "NOK") {
+                      allOK = false;
+                    }
+                    items.push({"location": location, "monitor" : monitor});
+                  }
+                }
+              });
+            });
+          });
+          MonitisPoller.SetIcon(allOK);
+          MonitorData = items;
 				}
 			);
 		}

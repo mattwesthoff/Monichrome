@@ -9,17 +9,14 @@ var Monichrome = function() {
 		UpdateMonitors : function () {	
 			var data = chrome.extension.getBackgroundPage().MonitisPoller.GetMonitorData();
 			var items = [];
-			$.each(data, function(key, location) {
-				$.each(location, function(key, monitors) {
-					$.each(monitors, function (key, monitor) {
-						if (monitor.id) {
-              if (includeMonitor(location, monitor)) {
-                items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
-              }
-						}
-					});
-				});
-			});
+			$.each(data, function(key, monitorData) {
+        var monitor = monitorData.monitor;
+        if (monitor.id) {
+          if (includeMonitor(location, monitor)) {
+            items.push('<tr><td>' + monitor.status + '</td><td>' + monitor.tag + '</td><td>' + monitor.name  + '</td></tr>');
+          }
+        }
+      });
 			var html = items.join('');
 			$('#monitor_data').html(html);
 			

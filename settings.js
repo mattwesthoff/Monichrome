@@ -8,6 +8,7 @@ var Settings = function () {
       localStorage["Monichrome.PollingTimeout"] = timeout;
     },
     GetFilterFunction : function() {
+      return "function(loc, mon) { return true; }";
       return localStorage["Monichrome.FilterFunction"] || 
         "function(loc, monitor) { return monitor.tag === 'IDM';}";
     }
