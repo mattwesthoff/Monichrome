@@ -41,7 +41,7 @@ var MonitisPoller = function () {
 							$.each(monitors, function (key, monitor) {
 								if (monitor.id) {
 									if (includeMonitor(monitor, location)) {
-										if (monitor.status === "NOK") {
+										if (allOK && monitor.status === "NOK") {
 											allOK = false;
 										}
 										items.push({"location": location.locationName, "monitor" : monitor});
